@@ -68,9 +68,9 @@ if ((current_state == stateACTION1) or (ability_keyp)){
     exit;
 }
 
-if (main_keyp and (attack_alarm < 0 or (stateATTACK and attack_alarm <= 12))){//12 = .2*60;
-    AttackInit(obj_projectile_melee,.4,snd_samurai_attack,10);
-    sprite_index = SetAttackAnimation(current_state,animate_attack,animate_attack2);    
+if (main_keyp and (attack_alarm < 0 or (stateATTACK and attack_alarm <= (attack_length-12)))){//12 = .2*60;
+    AttackInit(obj_projectile_melee,.5,snd_samurai_attack,10);
+    ani_atkcombo = SetAttackAnimation(current_state);    
     state = stateATTACK;
     exit;
 }

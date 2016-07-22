@@ -1,9 +1,6 @@
-///SetAttackAnimation(current_state,animation1,animation2);
-var sprite = argument[1];
-if (argument[0] == stateATTACK ){
-    if (sprite_index != argument[2]){
-        sprite = argument[2];
-    } 
+///SetAttackAnimation(current_state);
+var result = 0;
+if (argument[0] == stateATTACK and ani_atkcombo <= ani_atknumber){
+	result = ani_atkcombo+1;
 }
-
-return sprite;
+return result;

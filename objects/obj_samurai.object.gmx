@@ -35,9 +35,8 @@ swords_speed = 360/room_speed;
 swords_x = 0;
 swords_y = 0;
 AnimateMoveSprites(spr_samurai_move,spr_samurai_moved,spr_samurai_moveu);
+AnimateAttackSprites(spr_samurai_slash,spr_samurai_slash2);
 animate_idle = spr_samurai_idle;
-animate_attack = spr_samurai_slash;
-animate_attack2 = spr_samurai_slash2;
 animate_action1 = spr_samurai_dash;
 animate_action2 = spr_samurai_dash;
 
@@ -107,6 +106,7 @@ switch(state){
     case stateATTACK:
         hspd *= .9;
         vspd *= .9;
+        sprite_index = animate_attack[ani_atkcombo];
         img_xsc = XscaleFlip(attack_dir);
         img_spd = 0;
         image_index = AnimateToAlarm(attack_length,attack_alarm);//Tween(EASEINCUBIC,0,attack_length/(image_number-1),attack_alarm,attack_length);

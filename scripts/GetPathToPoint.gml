@@ -9,4 +9,3 @@ if (mp_grid_path(obj_level_generator.grid_path,path_id,x,y,xx,yy,true)){
     path_set_kind(path_id,0);
     path_start(path_id,spd,path_action_stop,false);
 }
-

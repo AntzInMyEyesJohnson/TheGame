@@ -10,11 +10,12 @@ if (hspd != 0 or vspd != 0){
 }
 
 //find a random destination to patrol to within 200 pixels
-xx = irandom_range(x-300,x+300);
-yy = irandom_range(y-100,y+100);
+xx = (irandom_range(x-400,x+400) div CELL_WIDTH)*CELL_WIDTH+CELL_WIDTH/2;
+yy = (irandom_range(y-200,y+200) div CELL_HEIGHT)*CELL_HEIGHT+CELL_HEIGHT/2;
+
 
 //if the random destination is within the grid then change command script
-if (LoS_ToPoint(xx,yy)){
+if (!grid_place_meeting(xx,yy,)){
     move_speed = 0;
     ani_alarm = -1;
     comscript = cePatrolToXY;

@@ -87,20 +87,18 @@ switch(state){
         //hyper light drifter 15/30 long.  first 5-8 is when he moves.
         var spd = 7+action_combo; 
         spd = clamp(spd,8,12);
-        if (action1_timer &lt;= round(dash_length*2)){
-            if(action1_timer &gt; dash_length){
-                hspd *= .8;
-                vspd *= .8;
-                can_combo = true;
-            } else{
-                can_combo = false;
-                hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
-                vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
-            }
-        } else{
+        if (action1_timer &lt;= dash_length){
+            can_combo = false;
+            hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
+            vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
+        } else if (action1_timer &lt;= action1_length){
+            can_combo = true;
+            hspd *= .8;
+            vspd *= .8;
+        } else {
+            can_combo = false;
             hspd = 0;
             vspd = 0;
-            can_combo = false;
             state = stateFREE;
         }
     break;

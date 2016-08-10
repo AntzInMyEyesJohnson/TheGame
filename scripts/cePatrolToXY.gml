@@ -1,18 +1,16 @@
 ///cePatrolToXY();
-//find closest player
-player = instance_nearest(x,y,obj_player);
 
 //perform projectile and player checks
 checkType = H;
 
 //set charging alarm length and start animation alarm
 if (ani_alarm <= -1){
-    alarm_len = irandom_range(20,60);
+    alarm_len = irandom_range(30,120);
 }
 
-if(player){
+if(instance_exists(obj_player){
     //start chasing command if player is in range
-    if(LoS_ToObject(player) and ani_alarm > alarm_len){
+    if(LoS_ToObject(obj_player) and ani_alarm > alarm_len and InstanceInView(self)){
         comscript = argument[COMALERT];
         exit;
     } 
@@ -22,6 +20,15 @@ if(player){
 destdir = point_direction(x,y,xx,yy);
 hspd += lengthdir_x(max_speed/3,destdir);
 vspd += lengthdir_y(max_speed/3,destdir);
+
+/*using paths not hspd and vspd
+//move towards player
+hspd = 0;
+vspd = 0;
+spd += 20/room_speed;
+spd = clamp(spd,0, max_speed);
+GetPathToObject(epath,obj_player,spd);
+*/
 
 //when close to destination start picking out new destination
 if(point_distance(x,y,xx,yy)< 10){

@@ -10,12 +10,12 @@ if (hspd != 0 or vspd != 0){
 }
 
 //find a random destination to wander to within 200 pixels
-randomize();
-xx = irandom_range(x-200,x+200);
-yy = irandom_range(y-100,y+100);
+xx = (irandom_range(x-300,x+300) div CELL_WIDTH)*CELL_WIDTH+CELL_WIDTH/2;
+yy = (irandom_range(y-100,y+100) div CELL_HEIGHT)*CELL_HEIGHT+CELL_HEIGHT/2;
+
 
 //if the random destination is within the grid then change command script
-if (LoS_ToPoint(xx,yy)){
+if (!grid_place_meeting(xx,yy,)){
     move_speed = 0;
     comscript = ceWanderToXY;
     exit;

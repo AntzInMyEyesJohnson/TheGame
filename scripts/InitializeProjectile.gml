@@ -22,6 +22,7 @@ sonicboom = true;
 effect_hit_wall = false;
 part_alarm = 0;
 part_amount = 12;
+part_done = false;
 img_spd = 0;
 ff_mode = -1;
 projectile_particle = -1;

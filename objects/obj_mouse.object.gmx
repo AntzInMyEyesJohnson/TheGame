@@ -56,24 +56,31 @@ line_draw = false;
 if (room == rm_level_generator or room == rm_testing){
     //create specfic mouses if needed
     if (instance_exists(obj_gunslinger)){
-        //make revolver "locked on" mouse
-        if (!instance_exists(obj_revolver_mouse)){
-            instance_create(mouse_x,mouse_y,obj_revolver_mouse);   
-        }
         image_index = 0;
-        if (obj_gunslinger.lockedon == true){
-            image_alpha = 1;
+        image_alpha = 1;
+        can_hit = instance_place(x,y,obj_enemy_parent);
+        if (can_hit != noone){
+            image_blend = c_red;
+            image_angle += 10;
+        } else {
+            image_blend = c_white;
+            image_angle = 0;
+        }
+        x = mouse_x;
+        y = mouse_y;        
+        /*
+        if (obj_player.combat_target != -1 and (obj_gunslinger.state == stateACTION1 or obj_gunslinger.state == stateACTION2)){
             image_blend = c_red;
             image_angle += 4;
-            x = obj_revolver_mouse.x;
-            y = obj_revolver_mouse.y;
+            x = obj_player.combat_target.x;
+            y = obj_player.combat_target.y;
         } else {
-            image_alpha = 1;
             image_blend = c_white;
             image_angle = 0;
             x = mouse_x;
             y = mouse_y;
         }
+        */
     }else if (instance_exists(obj_samurai)){ 
         GetMainInput();
         image_index = 2;
@@ -120,21 +127,6 @@ if (room == rm_level_generator or room == rm_testing){
                     y = mouse_y;
                 }
             }
-    } else if (instance_exists(obj_bandit)){ 
-        //make revolver "locked on" mouse
-        if (!instance_exists(obj_teleport_mouse)){
-            instance_create(mouse_x,mouse_y,obj_teleport_mouse);
-            x = mouse_x;
-            y = mouse_y; 
-        } else {
-            //follow teleport mouse because of its unique usage in the bandits assassinate state
-            x = obj_teleport_mouse.x;
-            y = obj_teleport_mouse.y;
-        }
-        image_alpha = 1;
-        image_index = 3;
-        image_blend = c_white;
-        image_angle = 0;
     } else if (instance_exists(obj_viking)){
         image_index = 2;
         image_angle = point_direction(obj_viking.x,obj_viking.y,x,y)-90;

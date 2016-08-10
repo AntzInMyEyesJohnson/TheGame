@@ -74,12 +74,42 @@ if (path_exists(epath)){
     path_delete(epath);
 }
 
+if (instance_exists(obj_player)) {
+    while (ds_list_find_index(obj_player.combatList,id) != -1){
+        ds_list_delete(obj_player.combatList,ds_list_find_index(obj_player.combatList,id));
+    }
+}
+
 //set death depth
 depth = -(y+8);
 //draw to surface
 surface_set_target(obj_surface.surf);
     draw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,0,c_gray,image_alpha)
 surface_reset_target();
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="3" enumb="2">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///Combat range check
+InCombatRange(400);
 </string>
           </argument>
         </arguments>
@@ -208,6 +238,10 @@ if (comscript == ceChargeAttack or comscript == ceAim or comscript == ceAttack){
     draw_sprite_ext(spr_ff_hint,irandom(3),x,bbox_top,1,1,0,color,1);
 }
 draw_set_font(fnt_weapon_pickup);
+if (ds_list_find_index(obj_player.combatList,id) != -1){
+    var pos = ds_list_find_index(obj_player.combatList,id);
+    draw_text(obj_player.combatList[| pos].x,obj_player.combatList[| pos].y,"In combatList:" + string(obj_player.combatList[| pos]));
+}
 draw_text(bbox_left,bbox_top-10,script_get_name(comscript)+" xx: "+string(xx)+"yy: "+string(yy));
 </string>
           </argument>

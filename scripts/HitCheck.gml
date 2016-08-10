@@ -29,7 +29,7 @@ if(incoming_player_projectile){
         //set knockback spd to zero
         hspd = 0;
         vspd = 0;
-        knockback = min(incoming_player_projectile.damage,2);
+        knockback = min(incoming_player_projectile.damage/4,1);
 
         //reset ani alarm so it doesn't skip the check for setting it and the blood particles later
         ani_alarm = -1;

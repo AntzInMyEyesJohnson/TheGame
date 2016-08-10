@@ -10,6 +10,7 @@ parried_push = false;
 parried_click_count = 0;
 parried_button = mb_none;
 
+combatList = ds_list_create();
 hitby_list = ds_list_create();//create hitbox ds list
 hitby_list_timer = -1;
 swords_queue = ds_queue_create();
@@ -22,7 +23,7 @@ hspd = 0;
 vspd = 0;
 accel = 60/room_speed;
 decel = .82;
-target_locked = noone;
+combat_target = noone;
 attack_dir = 0;
 img_spd = 0;
 img_xsc = 1;
@@ -55,10 +56,14 @@ action1_length = 0;
 action2_timer = 20;
 action2_alarm = -1;
 action2_length = 0;
+ani_alarm = -1;
+ani_length = 0;
 action_dir = 0;
 action_dist = 0;
 attack_alarm = 0;
 attack_length = 0;
+action_combo = 0;
+can_combo = false;
 locked_timer = -1;
 locked_length = 40;
 
@@ -79,8 +84,8 @@ selected_weapon_index = 0;
 given_starting_weapon = false;
 if (instance_exists(obj_wizard)){
     starting_weapon = instance_create(x,y,obj_weapon_staff);
-}else if (instance_exists(obj_gunslinger)){
-    starting_weapon = instance_create(x,y,obj_weapon_revolver);
+/*}else if (instance_exists(obj_gunslinger)){
+    starting_weapon = instance_create(x,y,obj_weapon_revolver);*/
 }else if (instance_exists(obj_bandit)){
     starting_weapon = instance_create(x,y,obj_weapon_knife);
 /*}else if (instance_exists(obj_samurai)){

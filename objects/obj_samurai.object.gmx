@@ -83,23 +83,24 @@ switch(state){
         //animation
         sprite_index = animate_action1;
         image_index = round(action_dir/45);
-        var dash_length = 8;
+        var dash_length = 10;
         //hyper light drifter 15/30 long.  first 5-8 is when he moves.
-        //start decelerating at .2 of a second
+        var spd = 7+action_combo; 
+        spd = clamp(spd,8,12);
         if (action1_timer &lt;= round(dash_length*2)){
-            if (action1_timer &gt; round(dash_length+dash_length/2)){
-                hspd *= .5;
-                vspd *= .5;
-            }else if(action1_timer &gt; dash_length){
-                hspd *= decel;
-                vspd *= decel;
+            if(action1_timer &gt; dash_length){
+                hspd *= .8;
+                vspd *= .8;
+                can_combo = true;
             } else{
-                hspd = Tween(EASESMOOTHER,0,lengthdir_x(10,action_dir),action1_timer,dash_length);
-                vspd = Tween(EASESMOOTHER,0,lengthdir_y(10,action_dir),action1_timer,dash_length);
+                can_combo = false;
+                hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
+                vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
             }
         } else{
             hspd = 0;
             vspd = 0;
+            can_combo = false;
             state = stateFREE;
         }
     break;
@@ -208,8 +209,10 @@ HitbyListManagement();
 draw_sprite_ext(spr_player_shadow,0,x,y-3,scale_factor,scale_factor,0,c_white,.4);
 
 if (state == stateACTION1){ 
-    if(action1_timer &gt; 0){ 
-        if (!instance_exists(obj_surface_trails)){
+    if(action1_timer == 1){ 
+        if (action_combo &gt;= 2){
+            create_motion_trail(2,200,round(action_dir/15)*15,scale_factor,12,spr_samurai_dash_effect,0,true);
+        } else {
             create_motion_trail(2,150,0,scale_factor,15,sprite_index,image_index);
         }
     }

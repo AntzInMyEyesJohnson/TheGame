@@ -38,6 +38,8 @@ alpha = 1;
 sprite = undefined;
 img_blend = 0;
 image_speed = 0;
+draw_lines = false;
+do_lines = false;
 
 // Trail length in frames
 length = 0;
@@ -194,7 +196,7 @@ if (surface_exists(sf))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>img_blend = make_color_hsv(hue, 240, 120);
+            <string>img_blend = make_color_hsv(hue, 240, 160);
 
 if (!surface_exists(sf)){
     sf = surface_create(512, 256);
@@ -216,9 +218,32 @@ draw_set_blend_mode(bm_subtract);
 draw_set_blend_mode(bm_normal);
 surface_reset_target();
 
-
 // Draw surface to screen
 draw_surface(sf, x-surf_w/2, y-surf_h/2);
+
+//draw lines if ok
+if (do_lines){
+    vfactor = irandom_range(-20,20);
+    tfactor = 14;
+    val = -2;
+    line_alpha = 2+(die_limit div 10);
+    sx = creator.x+lengthdir_x(vfactor,rot);
+    sy = creator.y+lengthdir_y(vfactor,rot);
+    draw_lines = true;
+    do_lines = false;
+}
+
+if(draw_lines){
+    line_alpha -= .1;
+    draw_set_alpha(line_alpha);
+    draw_triangle_colour(sx+lengthdir_x(15,rot-90),sy+lengthdir_y(15,rot-90),sx+lengthdir_x(25,rot),sy+lengthdir_y(25,rot),sx+lengthdir_x(15,rot+90),sy+lengthdir_y(15,rot+90),img_blend,img_blend,img_blend,true);
+    draw_triangle_colour(sx+lengthdir_x(tfactor,rot-90),sy+lengthdir_y(tfactor,rot-90),sx+lengthdir_x(tfactor+10,rot),sy+lengthdir_y(tfactor+10,rot),sx+lengthdir_x(tfactor,rot+90),sy+lengthdir_y(tfactor,rot+90),img_blend,img_blend,img_blend,true);
+    draw_set_alpha(1);
+    tfactor += val;
+    tfactor = clamp(tfactor,2,14);
+    if (tfactor == 2 or tfactor == 14){val *= -1;}
+}
+
     
 // Draw final sprite
 //draw_sprite_ext(creator.sprite_index, creator.image_index, mouse_x, mouse_y, 1, 1, rot, c_white, 1);

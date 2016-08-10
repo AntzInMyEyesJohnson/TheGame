@@ -79,7 +79,7 @@ if instance_exists(obj_player) {
         camvspeed = 15;
         ratio = .1;
         if (instance_exists(obj_gunslinger)){
-            mouse = obj_revolver_mouse;
+            mouse = obj_mouse;
             player = obj_gunslinger;
             if (player.lockedon == true) {
                 camhspeed = 15;
@@ -87,7 +87,7 @@ if instance_exists(obj_player) {
                 ratio = 0.6;
             }
         }else if (instance_exists(obj_bandit)){
-            mouse = obj_teleport_mouse;
+            mouse = obj_mouse;
             player = obj_bandit;
             if (player.state == 'assassinate' or player.state == 'teleport') {
                 //camhspeed = 20;

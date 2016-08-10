@@ -123,10 +123,10 @@ switch(state){
         ###############*/
         if (last_assassinate_timer == round(between_assassinate_time*room_speed/2-1)/room_speed){
             //find enemies current facing direction
-            var t_dir = point_direction(target_locked.x,target_locked.y,target_locked.x+target_locked.hspd,target_locked.y+target_locked.vspd);
+            var t_dir = point_direction(combat_target.x,combat_target.y,combat_target.x+combat_target.hspd,combat_target.y+combat_target.vspd);
             //get teleport direction and teleport behind enemy
-            teleport_xpos = target_locked.x + lengthdir_x(12,t_dir-180);
-            teleport_ypos = target_locked.y + lengthdir_y(12,t_dir-180);
+            teleport_xpos = combat_target.x + lengthdir_x(12,t_dir-180);
+            teleport_ypos = combat_target.y + lengthdir_y(12,t_dir-180);
             //check that not colliding into a wall
             if (grid_place_meeting(teleport_xpos,teleport_ypos,0)){
                 while (grid_place_meeting(teleport_xpos,teleport_ypos,0)){
@@ -142,7 +142,7 @@ switch(state){
             x = teleport_xpos;
             y = teleport_ypos;
             //get direction to assassinate enemy in
-            assassinate_direction = point_direction(x,y,target_locked.x,target_locked.y);
+            assassinate_direction = point_direction(x,y,combat_target.x,combat_target.y);
             //make knife strikebox
             var projectile = instance_create(x+lengthdir_x(7,assassinate_direction),y+lengthdir_y(7,assassinate_direction),obj_projectile_melee);
             projectile.creator = self.id;

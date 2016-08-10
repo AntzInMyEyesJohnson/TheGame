@@ -1,4 +1,4 @@
-/// create_motion_trail(length,hue,rotation,scale,death_alarm)
+/// create_motion_trail(length,hue,rotation,scale,death_alarm,sprite,image,[do_lines])
 //
 //  Draws the assigned sprite of the calling instance, using its
 //  subimage, position, scaling, rotation, and blending settings,
@@ -19,6 +19,9 @@
     mt.die_limit = argument[4]+argument[4]/2;
     mt.sprite = argument[5];
     mt.image_index = argument[6];
+    if(argument_count > 7){
+        mt.do_lines = argument[7];
+    }
     
     mt.st_x[(mt.length-1)] = 0;
     mt.st_y[(mt.length-1)] = 0;

@@ -1,5 +1,4 @@
 ///PlayerCollisionWithWallGrid();
-/*
 // collision response
 if (grid_place_meeting(x+hspd,y,0)){
     var sx = sign(hspd);
@@ -40,8 +39,8 @@ if (grid_place_meeting(x,y+vspd,0)){
         image_speed = img_spd;
     }
 }
-*/
 
+/*
 ///PlayerCollisionWithWallGrid();
 // collision response
 if (grid_place_meeting(x+hspd,y,0)){

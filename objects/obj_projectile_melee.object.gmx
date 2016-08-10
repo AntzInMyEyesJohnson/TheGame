@@ -37,6 +37,7 @@ for(var i = 0;i &lt; ds_list_size(attached_upgrades);i++){
     }
 }
 
+AnimateAttackSprites(spr_katana_strikebox,spr_katana_strikebox2,spr_katana_strikebox3);
 
 </string>
           </argument>
@@ -67,41 +68,41 @@ if (instance_exists(creator)){
     if (init_projectile == true){
         if (creator.object_index == obj_samurai){
             knockback = 3;
-            sprite_index = spr_katana_strikebox;
             img_spd = .3;//creator.img_spd;
             if (image_index == 0){
                 if (creator.state == stateATTACK){
                     damage += 2;
                     accuracy = creator.attack_dir;
-                    if (creator.sprite_index == creator.animate_attack2){
-                        image_yscale = sign(creator.image_xscale)*-1;
-                    }
+                    sprite_index = animate_attack[creator.ani_atkcombo];
                     projectile_particle = global.pt_spark;
                     projectile_hue = 20;
-                    projectile_amount = 30;
+                    projectile_amount = 25;
                     projectile_sound = snd_samurai_attack_onhit;
                 }
                 if (creator.state == stateSPECIAL){
                     damage += 4;
                     accuracy = creator.swords_direction;
+                    sprite_index = animate_attack[0];
                     projectile_particle = global.pt_swordclash;
-                    projectile_hue = 150;
+                    projectile_hue = 235;
                     projectile_sound = snd_samurai_attack_special_onhit;
                 }
                 if (creator.state == stateUNIQUE){
                     damage += 5;
                     ff_mode = 1;
                     accuracy = creator.ff_dir;
+                    sprite_index = animate_attack[choose(0,1)];
                     projectile_particle = global.pt_swordclash;
-                    projectile_hue = 150;
+                    projectile_hue = 235;
                     projectile_sound = snd_samurai_attack_special_onhit;
                 }
                 if (creator.state == stateACTION2){ 
                     damage += 3;
                     accuracy = creator.action_dir;
+                    sprite_index = animate_attack[choose(0,1)];
                     projectile_particle = global.pt_spark;
                     projectile_hue = 20;
-                    projectile_amount = 30;
+                    projectile_amount = 25;
                     projectile_sound = snd_samurai_attack_onhit;
                 }
             }      
@@ -166,8 +167,8 @@ if (instance_exists(creator)){
 hitting_enemy = instance_place(x,y,obj_enemy_parent);
 
 if (hitting_enemy != noone){
-    if (projectile_particle != -1){
-        CreateParticle(projectile_particle,accuracy,projectile_amount,projectile_hue,hitting_enemy.x,hitting_enemy.y,-(y+50),ps_shape_line,ps_distr_gaussian,spr_part_swordclash2);
+    if (projectile_particle != -1 and part_done == false){
+        CreateParticle(projectile_particle,accuracy,projectile_amount,projectile_hue,hitting_enemy.x,hitting_enemy.y,-(y+50),ps_shape_rectangle,ps_distr_gaussian,spr_part_swordclash2);
         if(!audio_is_playing(projectile_sound)){
             PlaySound(projectile_sound,1,15,random_range(.9,1.1));
         }
@@ -183,6 +184,7 @@ image_speed = clamp(image_speed,0,1);
 hspd = lengthdir_x(knockback,accuracy);
 vspd = lengthdir_y(knockback,accuracy);
 image_angle = accuracy;
+image_yscale = XscaleFlip(accuracy);
 
 if (img_spd &gt; 0){
     if (image_index &gt;= floor(image_number-1)){

@@ -4,7 +4,7 @@
 checkType = HRm;//only check for melee cause immune to ranged while buried.
 mask_index = ani_idle;
 
-if (point_distance(x,y,player.x,player.y) < my_attack_range and LoS_ToObject(player) == true){
+if (InstanceInView(self) and point_distance(x,y,player.x,player.y) < my_attack_range and LoS_ToObject(player) == true){
     comscript = ceChargeAttack;
     mask_index = ani_attack;
     exit;

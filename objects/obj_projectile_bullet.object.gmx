@@ -295,7 +295,7 @@ if (instance_exists(creator)){
 //make a motion trail behind bullet
 if (ds_list_find_index(ds_trails,self.id) == -1){
     ds_list_add(ds_trails,self.id);
-    create_motion_trail(3,40,accuracy,1,300);
+    create_motion_trail(3,40,accuracy,1,300,sprite_index,image_index);
 }
 //draw self last so it is in front of line
 draw_sprite_ext(sprite_index,image_index,x,y,image_xscale,image_yscale,accuracy,c_white,1); 

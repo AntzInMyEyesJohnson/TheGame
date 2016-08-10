@@ -165,8 +165,7 @@ switch (state){
             //recoil
             x = owner.x + lengthdir_x(recoil,recoil_direction);
             y = owner.y + lengthdir_y(recoil,recoil_direction);
-            //eject shell
-            CreateDebris(spr_gunslinger_main_bulletshell,false,irandom_range(4,7),image_angle+irandom_range(135,175),1);
+            
             if (time_stop or time_slow){
                 //kick camera back and shake very little during time freezes
                 global.screenkick += -2;

@@ -9,7 +9,7 @@
             last_charge_timer = 0;
             action1_timer = 0;
             //get action1 direction
-            charge_direction = point_direction(x,y,target_locked.x,target_locked.y);
+            charge_direction = point_direction(x,y,combat_target.x,combat_target.y);
             //reset hspd and vspd
             hspd = 0;
             vspd = 0;

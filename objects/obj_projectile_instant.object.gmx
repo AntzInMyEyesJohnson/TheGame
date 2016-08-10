@@ -86,7 +86,7 @@ if (creator.object_index == obj_weapon_sniper){
     hspd = lengthdir_x(knockback,accuracy);
     vspd = lengthdir_y(knockback,accuracy);
     decel = 1;
-} else if (creator.object_index == obj_weapon_revolver){
+} else if (creator.object_index == obj_gunslinger){
     sprite_index = spr_sniper_bullet;
     image_index = 1;
     knockback = 5;

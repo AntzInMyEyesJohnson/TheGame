@@ -23,7 +23,7 @@ vspd = 0;
 
 //play sound
 if (action_snd != 0){
-    PlaySound(action_snd,.6,choose(8,9),random_range(.9,1.1));
+    PlaySound(action_snd,1,choose(9,10),.9+(.1*action_combo));
 }
             
        

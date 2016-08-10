@@ -1,5 +1,5 @@
 ///DisplayManaOnGUI;
-var yy = 42;
+var yy = 48;
 //time_mana meter
 if (instance_exists(obj_viking)){
     if (obj_viking.berserk_juice_left >= obj_viking.berserk_juice_max) {

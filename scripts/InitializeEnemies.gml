@@ -15,6 +15,6 @@ part_alarm = 0;
 player = instance_nearest(x,y,obj_player);
 hitby_list = ds_list_create();//create hitbox ds list
 hitby_list_timer = -1;
-checkType = HR;
+checkType = H;
 InitializeScreenFreezeVariables();
 

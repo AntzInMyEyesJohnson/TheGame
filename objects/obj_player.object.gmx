@@ -42,6 +42,9 @@ if ds_exists(copy_queue,ds_type_queue){
     ds_queue_destroy(copy_queue);
 }
 
+if ds_exists(combatList,ds_type_list){
+    ds_list_destroy(combatList);
+}
 
 if (path_exists(path)){
     path_delete(path);
@@ -73,6 +76,10 @@ if ds_exists(hitby_list,ds_type_list){
     ds_list_destroy(hitby_list);
 }
 
+if ds_exists(combatList,ds_type_list){
+    ds_list_destroy(combatList);
+}
+
 visible = false;
 </string>
           </argument>
@@ -99,6 +106,10 @@ visible = false;
             <string>///list stuff
 if !ds_exists(hitby_list,ds_type_list){
     hitby_list = ds_list_create();
+}
+
+if !ds_exists(combatList,ds_type_list){
+    combatList = ds_list_create();
 }
 
 if (room == rm_level_generator or room == rm_testing){
@@ -179,6 +190,9 @@ if ds_exists(copy_queue,ds_type_queue){
     ds_queue_destroy(copy_queue);
 }
 
+if ds_exists(combatList,ds_type_list){
+    ds_list_destroy(combatList);
+}
 
 if (path_exists(path)){
     path_delete(path);

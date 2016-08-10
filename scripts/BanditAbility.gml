@@ -13,7 +13,7 @@ if (ability_power_up == false and !ds_list_empty(attached_upgrades)){
 }
 //if (parried == false){
     if (ability_keyp){
-        if (ObjectInPath(x,y,obj_teleport_mouse.x,obj_teleport_mouse.y,10,obj_enemy_parent) and  
+        if (ObjectInPath(x,y,obj_mouse.x,obj_mouse.y,10,obj_enemy_parent) and  
             ability_power_up == true and
             last_assassinate_timer >= between_assassinate_time){
             //reset last teleport timer so it doesnt allow for assassinations then immediate teleportation

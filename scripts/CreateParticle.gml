@@ -38,6 +38,7 @@ if (part_alarm < 0){
         part_emitter_burst(global.ps_depth,global.em_depth,_type,_amount);
     }
     part_alarm = 0;
+    part_done = true;
     exit;
     //part_system_draw_order(index,oldtonew);
 }

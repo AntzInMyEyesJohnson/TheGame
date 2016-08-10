@@ -47,7 +47,7 @@ scr_part_slime_spat_init_dir(0);
 scr_part_shockwave_init_dir(0);
 scr_part_warpring_init_dir(0);
 scr_part_warpline_init_dir(0);
-scr_part_swordclash_init(0,0,spr_part_swordclash);
+scr_part_swordclash_init(0,190,spr_part_swordclash2);
 </string>
           </argument>
         </arguments>

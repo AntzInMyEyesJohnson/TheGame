@@ -74,9 +74,11 @@ if (state == stateDEATH){
         death_alarm--;
     }
 }
-
 if (attack_alarm >= 0){
     attack_alarm--;
+}
+if (ani_alarm >= 0){
+    ani_alarm--;
 }
 action1_timer += 1;
 action2_timer += 1;

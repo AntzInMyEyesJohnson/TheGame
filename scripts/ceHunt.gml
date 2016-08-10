@@ -4,7 +4,7 @@ if (chaser == false){
     //perform projectile and player checks
     checkType = H;
 
-    if (point_distance(x,y,player.x,player.y) < my_attack_range){
+    if (InstanceInView(self) and point_distance(x,y,player.x,player.y) < my_attack_range){
         if (!instance_exists(partner)){
             comscript = ceChargeAttack;
             exit;
@@ -34,7 +34,7 @@ if (chaser == false){
             exit;
         }
     } else {
-        if (point_distance(x,y,player.x,player.y) < my_attack_range){
+        if (InstanceInView(self) and point_distance(x,y,player.x,player.y) < my_attack_range){
             comscript = ceChargeAttack;
             exit;
         }

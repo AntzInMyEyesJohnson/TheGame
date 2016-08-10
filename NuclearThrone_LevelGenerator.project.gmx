@@ -10,16 +10,16 @@
     <sound>sound\snd_bullethitobject</sound>
     <sound>sound\snd_weapon_rifle</sound>
     <sound>sound\snd_weapon_bow</sound>
-    <sound>sound\snd_weapon_sniper01</sound>
-    <sound>sound\snd_weapon_sniper02</sound>
+    <sound>sound\snd_gunslinger_attack3</sound>
+    <sound>sound\snd_gunslinger_attack4</sound>
     <sound>sound\snd_samurai_attack</sound>
     <sound>sound\snd_weapon_katana2</sound>
     <sound>sound\snd_weapon_knife</sound>
     <sound>sound\snd_weapon_knife_assassinate1</sound>
     <sound>sound\snd_weapon_knife_assassinate2</sound>
     <sound>sound\snd_bandit_teleport</sound>
-    <sound>sound\snd_weapon_revolver01</sound>
-    <sound>sound\snd_weapon_revolver02</sound>
+    <sound>sound\snd_gunslinger_attack1</sound>
+    <sound>sound\snd_gunslinger_attack2</sound>
     <sound>sound\snd_select</sound>
     <sound>sound\snd_weapon_staff_fireball</sound>
     <sound>sound\snd_hit1</sound>
@@ -40,10 +40,6 @@
     <sound>sound\snd_weapon_ax01</sound>
     <sound>sound\snd_samurai_dash</sound>
     <sound>sound\snd_dtest1</sound>
-    <sound>sound\snd_dtest2</sound>
-    <sound>sound\snd_dtest3</sound>
-    <sound>sound\snd_dtest4</sound>
-    <sound>sound\snd_dtest5</sound>
     <sound>sound\snd_slime_attack</sound>
     <sound>sound\snd_archer_attack</sound>
     <sound>sound\snd_viking_draw_shield</sound>
@@ -54,6 +50,8 @@
     <sprites name="weapons">
       <sprites name="projectiles/hitboxes">
         <sprite>sprites\spr_katana_strikebox</sprite>
+        <sprite>sprites\spr_katana_strikebox3</sprite>
+        <sprite>sprites\spr_katana_strikebox2</sprite>
         <sprite>sprites\spr_ax_strikebox</sprite>
         <sprite>sprites\spr_knife_strikebox</sprite>
         <sprite>sprites\spr_revolver_bullet</sprite>
@@ -180,8 +178,10 @@
         <sprite>sprites\spr_samurai_move</sprite>
         <sprite>sprites\spr_samurai_dash_old</sprite>
         <sprite>sprites\spr_samurai_dash</sprite>
+        <sprite>sprites\spr_samurai_dash_effect</sprite>
         <sprite>sprites\spr_samurai_dash_trail</sprite>
         <sprite>sprites\spr_samurai_death</sprite>
+        <sprite>sprites\spr_katana_slashes</sprite>
         <sprite>sprites\spr_samurai_slash</sprite>
         <sprite>sprites\spr_samurai_slash2</sprite>
         <sprite>sprites\spr_samurai_moved</sprite>
@@ -190,8 +190,10 @@
       <sprites name="gunslinger">
         <sprite>sprites\spr_gunslinger_idle</sprite>
         <sprite>sprites\spr_gunslinger_move</sprite>
+        <sprite>sprites\spr_gunslinger_moveu</sprite>
         <sprite>sprites\spr_gunslinger_parts</sprite>
         <sprite>sprites\spr_gunslinger_shoot</sprite>
+        <sprite>sprites\spr_gunslinger_shoot2</sprite>
         <sprite>sprites\spr_gunslinger_death</sprite>
       </sprites>
       <sprites name="viking">
@@ -374,6 +376,7 @@
     <scripts name="player">
       <scripts name="gunslinger">
         <script>scripts\GunslingerAbility.gml</script>
+        <script>scripts\GunslingerChecks.gml</script>
         <script>scripts\GunslingerSpecial.gml</script>
       </scripts>
       <scripts name="samurai">
@@ -462,6 +465,13 @@
       <script>scripts\set_los_effects_tiles.gml</script>
       <script>scripts\set_indexes.gml</script>
     </scripts>
+    <scripts name="combat">
+      <script>scripts\CombatMovement.gml</script>
+      <script>scripts\CombatReady.gml</script>
+      <script>scripts\CombatExit.gml</script>
+      <script>scripts\CombatPossibleWith.gml</script>
+      <script>scripts\InCombatRange.gml</script>
+    </scripts>
     <script>scripts\explode_real.gml</script>
     <script>scripts\InitializeRoom.gml</script>
     <script>scripts\SetCursorTargetReticule.gml</script>
@@ -507,6 +517,9 @@
     <script>scripts\script133.gml</script>
     <script>scripts\old_ass_level_gen_shit.gml</script>
     <script>scripts\SetAttackAnimation.gml</script>
+    <script>scripts\AnimateAttackSprites.gml</script>
+    <script>scripts\AnimateActionMoveSprites.gml</script>
+    <script>scripts\InstanceInView.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_game_over</font>
@@ -584,8 +597,6 @@
     </objects>
     <objects name="mouse">
       <object>objects\obj_mouse</object>
-      <object>objects\obj_teleport_mouse</object>
-      <object>objects\obj_revolver_mouse</object>
     </objects>
     <objects name="effects">
       <object>objects\obj_effect_bullethit</object>

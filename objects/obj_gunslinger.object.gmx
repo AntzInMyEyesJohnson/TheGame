@@ -31,38 +31,15 @@ InitializeScreenFreezeVariables();
 InitializeTimers();
 lockedon = false;
 deadeye = false;
-animate_move = spr_gunslinger_move;
+AnimateMoveSprites(spr_gunslinger_move,spr_gunslinger_move,spr_gunslinger_moveu);
+//AnimateActionMoveSprites(spr_gunslinger_move,spr_gunslinger_move,spr_gunslinger_moveu);
 animate_idle = spr_gunslinger_idle;
-scale_factor = .5;
+animate_action1 = spr_gunslinger_move;//spr_gunslinger_roll
+AnimateAttackSprites(spr_gunslinger_shoot,spr_gunslinger_shoot2);
+scale_factor = .75;
 lockedon_off_delay = -1; //for mouse and shot delay
 
 
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="1" enumb="0">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///destroy list
-if ds_exists(hitby_list,ds_type_list){
-    ds_list_destroy(hitby_list);
-}
 </string>
           </argument>
         </arguments>
@@ -86,116 +63,112 @@ if ds_exists(hitby_list,ds_type_list){
           <argument>
             <kind>1</kind>
             <string>///player step
-//get depth
+//set depth
 depth = -(y+4);
 
-//screen freeze after weapon's projectile hits enemy
+//when hitting enemy the screen will freeze
 if (ScreenFreezeCheck()){exit;}
 
-//for when the player is using the grapple weapon
-if (GrappleCheck()){
-    //propels player towards the hook projectile embedded in the wall
-    hspd = lengthdir_x(grap_spd,grap_dir);
-    vspd = lengthdir_y(grap_spd,grap_dir);
-    PlayerCollisionWithWallGrid();
-    exit;
-}
-
-//give starting weapon
-if (given_starting_weapon == true){
-    weapon[selected_weapon_index] = starting_weapon.id;
-    weapon_count++;
-    starting_weapon.state = 'unholstered';
-    given_starting_weapon = false;
-}
-
+//samurai state checks
+GunslingerChecks(state);
+/*
+Unique -&gt; can go into cover
+Special -&gt; deadeye time_stop
+Action2 -&gt; if enemy close stab execute and use as shield and lock on else lock on and strafe
+Action1 -&gt; stab execute
+Attack2 -&gt; revolvers with instant shot
+Attack1 -&gt; revolvers
+*/
+/* State Machine */
 switch(state){
     case stateFREE:
-        GetMovementInput();
         PlayerMovement();
-        GunslingerAbility();
-        GunslingerSpecial();
         PlayerSwapSecondary();
     break;
+    case stateACTION1:
+        //animation
+        sprite_index = animate_action1;
+        image_index = round(action_dir/45);
+        var dash_length = 9;
+        var spd = 8;
+        if (action1_timer &lt;= round(dash_length*2)){
+            if(action1_timer &gt; dash_length){
+                hspd *= .8;
+                vspd *= .8;
+            } else{
+                hspd = Tween(EASEINOUTCIRC,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
+                vspd = Tween(EASEINOUTCIRC,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
+            }
+        } else{
+            hspd = 0;
+            vspd = 0;
+            state = stateFREE;
+        }
+        /*
+        CombatMovement(combat_target);
+        //obj_mouse.x = combat_target.x;
+        //obj_mouse.y = combat_target.y;
+        if (CombatExit()){
+            state = stateFREE;
+        }*/
+    break;
+    case stateACTION2:
+        state = stateFREE;
+    break;
+    case stateATTACK:
+        hspd *= .9;
+        vspd *= .9;
+        sprite_index = animate_attack[ani_atkcombo];
+        img_xsc = XscaleFlip(attack_dir);
+        img_spd = 0;
+        image_index = AnimateToAlarm(attack_length,attack_alarm);//Tween(EASEINCUBIC,0,attack_length/(image_number-1),attack_alarm,attack_length);
+        if(round(attack_alarm) == 0){
+            state = stateFREE;
+        }
+    break;
     case stateHIT:
-       PlayerHitState();
+        PlayerHitState()
+    break;
+    case stateSPECIAL:
+        ThousandSwords();
+    break;
+    case stateUNIQUE:
+        //sprite_index = animate_action1;
+        image_index = round(ff_dir/45);
+        img_spd = 0;
+        FreeflowState();
+    break;
+    case stateLOCKED:
+        PlayerLockedState();
     break;
     case stateDEATH:
-        PlayerDeathState(spr_gunslinger_death);  
+        PlayerDeathState(spr_gunslinger_death);
+        //room_restart();
     break;
 }
 //Increment 'last' timers
 IncrementTimers();
 
 //facing
-if (hspd != 0){
-    //image_speed = (speed*6)/room_speed;
-    image_xscale = sign(hspd);
-} 
-
-/* Scale change*/
-if (sprite_index == spr_gunslinger_idle){
-    scale_factor = .7;
-}else {
-    scale_factor = .4;
-}
-image_xscale = sign(image_xscale)*scale_factor;
-image_yscale = sign(image_yscale)*scale_factor;
-
-if (PlayerHitByProjectile()){
-    if (state != stateDEATH){
-        if (ds_list_find_index(hitby_list,incoming_enemy_projectile) == -1){
-            ds_list_add(hitby_list,incoming_enemy_projectile);
-            hitby_list_timer = room_speed*10;
-            
-            //knockback
-            hspd += incoming_enemy_projectile.hspd;
-            vspd += incoming_enemy_projectile.vspd;
-            
-            //play player hit sound
-            PlaySound(snd_hit3,1,15,random_range(1,1.1));
-                        
-            //subtract damage from health only if projectile not in ds list (so only once per projectile)
-            player_health -= incoming_enemy_projectile.damage;     
-            if (player_health &lt;= 0){
-                state = stateDEATH;
-            } else {
-                hit_timer = 0;
-                state = stateHIT;
-            }
-        }
+if (state == stateATTACK){
+    image_xscale = img_xsc;
+} else {
+    if (hspd != 0){
+        image_xscale = sign(hspd);
     }
 }
 
-PlayerCollisionWithWallGrid();
+if (sprite_index == spr_gunslinger_move){scale_factor = .4;}
+else{scale_factor = .75;}
 
+//Scale change
+image_xscale = sign(image_xscale)*scale_factor;
+image_yscale = sign(image_yscale)*scale_factor;
+
+PlayerCollisionWithWallGrid();
+FreeflowListManagement();
 HitbyListManagement();
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="7" enumb="3">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///destroy list
-if ds_exists(hitby_list,ds_type_list){
-    ds_list_destroy(hitby_list);
-}
+
 </string>
           </argument>
         </arguments>

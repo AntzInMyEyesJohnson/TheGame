@@ -15,7 +15,7 @@ if (!LoS_ToObject(player)){
     exit;
 } 
 
-if (point_distance(x,y,player.x,player.y) < my_attack_range){
+if (InstanceInView(self) and point_distance(x,y,player.x,player.y) < my_attack_range){
     comscript = ceChargeAttack;
     exit;
 }

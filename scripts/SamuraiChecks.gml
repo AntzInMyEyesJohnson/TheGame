@@ -60,16 +60,27 @@ if ((current_state == stateACTION2) or (ability_keyp and ability_power_up)){
     exit;    
 }
 
+if (current_state == stateACTION1 and ability_keyp and can_combo){
+    action_combo++;
+    action_combo = clamp(action_combo,0,5);
+    ActionInit(x,y,obj_mouse.x,obj_mouse.y,24,snd_dtest1);
+    state = stateACTION1;
+    exit;
+}
+
 if ((current_state == stateACTION1) or (ability_keyp)){
-    if (current_state != stateACTION1 and action1_timer > action1_length){
-        ActionInit(x,y,obj_mouse.x,obj_mouse.y,24,snd_dtest1);
+    if (current_state != stateACTION1){
+        if(action1_timer > action1_length){
+            action_combo = 0;
+            ActionInit(x,y,obj_mouse.x,obj_mouse.y,24,snd_dtest1);
+        }
     }
     state = stateACTION1;
     exit;
 }
 
-if (main_keyp and (attack_alarm < 0 or (stateATTACK and attack_alarm <= (attack_length-12)))){//12 = .2*60;
-    AttackInit(obj_projectile_melee,.5,snd_samurai_attack,10);
+if (main_keyp and (attack_alarm < 0 or (stateATTACK and attack_alarm <= (attack_length-10)))){//12 = .2*60;
+    AttackInit(obj_projectile_melee,.4,snd_samurai_attack,10);
     ani_atkcombo = SetAttackAnimation(current_state);    
     state = stateATTACK;
     exit;
@@ -84,18 +95,6 @@ if (current_state == stateFREE){
     state = stateFREE;
     exit;
 }
-
-
-    
-
-
-
-    
-
-
-
-
-
 
 /*
 if (state == stateDEATH)

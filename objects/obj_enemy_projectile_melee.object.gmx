@@ -25,15 +25,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>creator = noone;
-damage = 0;
-spd = 0;
-knockback = 0;
-accuracy = 0;
-image_index = 0;
-image_speed = 0;
-hspd = 0;
-vspd = 0;
+            <string>///Create
+InitializeProjectile();
 //for screen freezes
 InitializeScreenFreezeVariables();
 

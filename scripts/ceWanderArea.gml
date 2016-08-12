@@ -15,7 +15,7 @@ yy = (irandom_range(y-100,y+100) div CELL_HEIGHT)*CELL_HEIGHT+CELL_HEIGHT/2;
 
 
 //if the random destination is within the grid then change command script
-if (!grid_place_meeting(xx,yy,)){
+if (!grid_place_meeting(xx,yy,0)){
     move_speed = 0;
     comscript = ceWanderToXY;
     exit;

@@ -84,10 +84,9 @@ switch(state){
         sprite_index = animate_action1;
         image_index = round(action_dir/45);
         var dash_length = 10;
-        //hyper light drifter 15/30 long.  first 5-8 is when he moves.
         var spd = 7+action_combo; 
         spd = clamp(spd,8,12);
-        if (action1_timer &lt;= dash_length){
+        if (action1_timer &lt;= dash_length){//hyper light drifter 15/30 long.  first 5-8 is when he moves.
             can_combo = false;
             hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
             vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
@@ -118,23 +117,22 @@ switch(state){
         sprite_index = animate_action2;
         image_index = round(action_dir/45);
         var dash_length = 8;
+        var spd = 9+action_combo; 
+        spd = clamp(spd,10,14);
         if (action2_timer == 0){
             var projectile = instance_create(x + lengthdir_x(8,action_dir),y + lengthdir_y(8,action_dir),obj_projectile_melee);
             projectile.creator = self.id;
         }
-        //start decelerating at .2 of a second
-        if (action2_timer &lt;= round(dash_length*2)){
-            if (action2_timer &gt; round(dash_length+dash_length/2)){
-                hspd *= .5;
-                vspd *= .5;
-            }else if(action1_timer &gt; dash_length){
-                hspd *= decel;
-                vspd *= decel;
-            } else{
-                hspd = Tween(EASESMOOTHER,0,lengthdir_x(11,action_dir),action2_timer,dash_length);
-                vspd = Tween(EASESMOOTHER,0,lengthdir_y(11,action_dir),action2_timer,dash_length);
-            }
-        } else{
+        if (action2_timer &lt;= dash_length){
+            can_combo = false;
+            hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action2_timer,dash_length);
+            vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action2_timer,dash_length);
+        } else if (action2_timer &lt;= action2_length){
+            can_combo = true;
+            hspd *= decel;
+            vspd *= decel;
+        } else {
+            can_combo = false;
             hspd = 0;
             vspd = 0;
             state = stateFREE;

@@ -384,6 +384,7 @@
         <script>scripts\SamuraiChecks.gml</script>
         <script>scripts\SamuraiSpecial.gml</script>
         <script>scripts\ThousandSwords.gml</script>
+        <script>scripts\ThousandSwordsInit.gml</script>
       </scripts>
       <scripts name="bandit">
         <script>scripts\BanditAbility.gml</script>
@@ -520,6 +521,7 @@
     <script>scripts\AnimateAttackSprites.gml</script>
     <script>scripts\AnimateActionMoveSprites.gml</script>
     <script>scripts\InstanceInView.gml</script>
+    <script>scripts\collision_line_list.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_game_over</font>

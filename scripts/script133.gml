@@ -1,5 +1,7 @@
 
 
+
+
 //Combat state stuff
 //place before stateFREE check
 /*

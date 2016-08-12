@@ -8,7 +8,7 @@ if (ani_alarm <= -1){
     alarm_len = irandom_range(30,120);
 }
 
-if(instance_exists(obj_player){
+if(instance_exists(obj_player)){
     //start chasing command if player is in range
     if(LoS_ToObject(obj_player) and ani_alarm > alarm_len and InstanceInView(self)){
         comscript = argument[COMALERT];

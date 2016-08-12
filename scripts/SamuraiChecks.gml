@@ -42,7 +42,18 @@ if (FreeflowCheck(kills_required,300, obj_enemy_parent))
     }
 }
 
-if ((current_state == stateSPECIAL) or (special_keyp and special_power_up and juice1_left > 0)){
+if (special_keyp and special_power_up and juice1_left > 0){
+    if (current_state != stateSPECIAL){
+        ThousandSwordsInit(40,175,100);
+        state = stateSPECIAL;
+        exit;
+    } else {//so it toggles
+        state = stateFREE;
+        exit;
+    }
+}
+
+if ((current_state == stateSPECIAL)){
     state = stateSPECIAL;
     exit;
 }

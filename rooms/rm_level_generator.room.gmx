@@ -15,7 +15,7 @@
 if (!background_visible[global.stage-1]){
     background_visible[global.stage-1] = true;
 }
-global.champion_selected = obj_gunslinger;
+global.champion_selected = obj_samurai;
 //global.weather_type = 'normal';</code>
   <enableViews>-1</enableViews>
   <clearViewBackground>-1</clearViewBackground>

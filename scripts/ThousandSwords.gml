@@ -1,4 +1,52 @@
 ///ThousandSwords();
+
+GetMainInput();
+var _spd,_dir,_duration,_max_duration,_isHit;
+if (juice1_left > 0 and charges_left > 0){
+    time_exception = true;
+    time_stop = true;
+    time_slow = false;
+    var sword_present = instance_place(obj_mouse.x,obj_mouse.y,obj_planted_sword);
+    if (sword_present != noone and main_keyp and _duration < 0){
+        sword_present.isSelected = true;
+        _max_duration = 4;
+        _duration = _max_duration;
+        _spd = round(point_distance(x,y,sword_present.x,sword_present.y)/_max_duration);
+        _dir = point_direction(x,y,sword_present.x,sword_present.y);
+        _isHit = false;
+    }
+} else {
+    state = stateFREE;
+    exit;
+}
+
+if (_duration > 0){
+    hspd = lengthdir_x(_spd,_dir);
+    vspd = lengthdir_y(_spd,_dir);
+    if (!_isHit){
+        _isHit = true;
+        charges_left += 1;
+        var enemiesInPath = collision_line_list(x,y,x+hspd,y+vspd,obj_enemy_parent,false,true);
+        if (enemiesInPath != noone){
+            for(var i = 0;i < ds_list_size(enemiesInPath);i++;){
+                instance_create(enemiesInPath[| i].x,enemiesInPath[| i].y,obj_projectile_melee);
+            }
+            ds_list_destroy(enemiesInPath);
+        }
+    }
+} else {
+    hspd = 0;
+    vspd = 0;
+    if (_duration == 0){
+        charges_left -= 1;
+    }
+} 
+
+_duration--;
+
+/*
+
+///ThousandSwordsOLD();
 GetMainInput();
 juice1_left -= 1/room_speed;
 if (juice1_left > 0){

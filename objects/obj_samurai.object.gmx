@@ -76,7 +76,7 @@ switch(state){
         PlayerSwapSecondary();
     break;
     case stateACTION1:
-        //animation
+        //TODO small landing prediction
         sprite_index = animate_action1;
         image_index = round(action_dir/45);
         var dash_length = 8;
@@ -86,11 +86,15 @@ switch(state){
             can_combo = false;
             hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
             vspd = Tween(EASESMOOTHER,0,lengthdir_y(spd,action_dir),action1_timer,dash_length);
+        } else if (action1_timer &lt;= (dash_length+4)){//so there has to be good timing
+            can_combo = false;
+            hspd *= .8;
+            vspd *= .8;
         } else if (action1_timer &lt;= action1_length){
             can_combo = true;
             hspd *= .8;
             vspd *= .8;
-        } else {
+        }else {
             can_combo = false;
             hspd = 0;
             vspd = 0;

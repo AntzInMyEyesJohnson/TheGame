@@ -1,48 +1,58 @@
 ///ThousandSwords();
-
 GetMainInput();
-var _spd,_dir,_duration,_max_duration,_isHit;
-if (juice1_left > 0 and charges_left > 0){
-    time_exception = true;
-    time_stop = true;
-    time_slow = false;
-    var sword_present = instance_place(obj_mouse.x,obj_mouse.y,obj_planted_sword);
-    if (sword_present != noone and main_keyp and _duration < 0){
-        sword_present.isSelected = true;
-        _max_duration = 4;
-        _duration = _max_duration;
-        _spd = round(point_distance(x,y,sword_present.x,sword_present.y)/_max_duration);
-        _dir = point_direction(x,y,sword_present.x,sword_present.y);
-        _isHit = false;
-    }
-} else {
-    state = stateFREE;
-    exit;
-}
-
-if (_duration > 0){
-    hspd = lengthdir_x(_spd,_dir);
-    vspd = lengthdir_y(_spd,_dir);
-    if (!_isHit){
-        _isHit = true;
-        charges_left += 1;
-        var enemiesInPath = collision_line_list(x,y,x+hspd,y+vspd,obj_enemy_parent,false,true);
-        if (enemiesInPath != noone){
-            for(var i = 0;i < ds_list_size(enemiesInPath);i++;){
-                instance_create(enemiesInPath[| i].x,enemiesInPath[| i].y,obj_projectile_melee);
-            }
-            ds_list_destroy(enemiesInPath);
-        }
-    }
-} else {
+if (juice1_left > 0 /*and charges_left > 0*/ and spec_alarm < 0){
+    SetTimeState(true,false,true);
     hspd = 0;
     vspd = 0;
-    if (_duration == 0){
-        charges_left -= 1;
+    var sword_present = instance_place(obj_mouse.x,obj_mouse.y,obj_planted_sword);
+    if (sword_present != noone and main_keyp){
+        sword_present.isSelected = true;
+        spec_alarm_length = 6;
+        spec_alarm = spec_alarm_length;
+        spec_spd = round(point_distance(x,y,sword_present.x,sword_present.y)/spec_alarm_length);
+        spec_dir = point_direction(x,y,sword_present.x,sword_present.y);
+        //charges_left--;
+        spec_x = x;
+        spec_y = y;
+        //var enemiesInLine = collision_line_list(spec_x,spec_y,x+lengthdir_x(spec_spd*spec_alarm_length,spec_dir),y+lengthdir_y(spec_spd*spec_alarm_length,spec_dir),obj_enemy_parent,false,true);
     }
-} 
+} else {
+    if (spec_alarm > 0){
+        hspd = lengthdir_x(spec_spd,spec_dir);
+        vspd = lengthdir_y(spec_spd,spec_dir);
+        /*
+        var swordsInLine = collision_line_list(x,y,x+hspd,y+vspd,obj_planted_sword,false,true);
+        if (swordsInLine != noone){
+            for(var i = 0;i < ds_list_size(swordsInLine);i++;){
+                instance_create(swordsInLine[| i].x,swordsInLine[| i].y,obj_projectile);
+            }
+            ds_list_destroy(swordsInLine);
+        }
+        */
+    }
+    if (spec_alarm == 1){
+        var enemiesInLine = collision_line_list(spec_x,spec_y,x+lengthdir_x(spec_spd*spec_alarm_length,spec_dir),y+lengthdir_y(spec_spd*spec_alarm_length,spec_dir),obj_enemy_parent,false,true);
+        if (ds_exists(enemiesInLine,ds_type_list) and enemiesInLine != noone){
+            for(var i = 0;i < ds_list_size(enemiesInLine);i++;){
+                var slashEnemy = instance_create(enemiesInLine[| i].x,enemiesInLine[| i].y,obj_projectile_melee);
+                slashEnemy.creator = id;
+                slashEnemy.specialPositioning = enemiesInLine[| i].id
+            }
+            ds_list_destroy(enemiesInLine);
+        }
+    }
+    if (spec_alarm < 0){
+        hspd = 0;
+        vspd = 0;
+        //charges_left = charges_max;
+        SetTimeState(false,false,false);
+        state = stateFREE;
+        exit;
+    }   
+}
 
-_duration--;
+spec_alarm--;
+
 
 /*
 
@@ -82,7 +92,7 @@ if (juice1_left > 0){
         }
     }       
 } else {
-    //at start of moving sequence toggle dequeue to true
+    //at spec of moving sequence toggle dequeue to true
     if (juice1_left == 0){
         dequeue_to_next_point = true;
         ds_queue_copy(copy_queue,swords_queue);
@@ -117,7 +127,7 @@ if (juice1_left > 0){
             swords_speed += 100/room_speed;//7
             //clamp swords speed
             swords_speed = clamp(swords_speed,-660/room_speed,+660/room_speed);
-            //start path
+            //spec path
             GetPathToPoint(path,swords_x,swords_y,swords_speed);
             //create slash hitbox
             var projectile = instance_create(x+lengthdir_x(8,swords_direction),y+lengthdir_y(8,swords_direction),obj_projectile_melee);

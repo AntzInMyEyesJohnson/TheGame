@@ -1,6 +1,6 @@
 ///FreeflowAbility();
 
-var mo_dir,tg_dir,ff_dir90,result;
+var mo_dir,tg_dir,ff_dir90,mask_len,result;
 
 result = ffFALSE;
 mo_dir = point_direction(x,y,obj_mouse.x,obj_mouse.y);
@@ -9,12 +9,13 @@ if (!ds_list_empty(ff_list)){
         if (instance_exists(ff_list[| i])){
             tg_dir = point_direction(x,y,ff_list[| i].x,ff_list[| i].y);
         }
-        if (mo_dir == median(tg_dir-10,tg_dir+10,mo_dir)){
+        if (mo_dir == median(tg_dir-15,tg_dir+15,mo_dir)){
             if(ff_list[| i].comscript != ceDeath and ff_list[| i].comscript != ceDestroy and ff_list[| i].comscript != ceDeathSpawn){
                 ff_target = ff_list[| i];
                 ff_dir = point_direction(x,y,ff_target.x,ff_target.y);
                 ff_dir90 = round(ff_dir/90);
-                ff_dist = point_distance(x,y,ff_target.x,ff_target.y);
+                mask_len = max(ff_target.bbox_right+1-ff_target.bbox_left,ff_target.bbox_bottom+1-ff_target.bbox_top);
+                ff_dist = point_distance(x,y,ff_target.x-lengthdir_x(mask_len,ff_dir),ff_target.y-lengthdir_y(mask_len,ff_dir));
                 result = ff_target.eff_type;
                 break;
             }

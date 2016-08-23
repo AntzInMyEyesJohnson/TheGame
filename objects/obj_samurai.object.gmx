@@ -30,10 +30,6 @@ InitializePlayer();
 InitializeScreenFreezeVariables();
 InitializeTimers();
 kills_required = 3;
-swords_direction = 0;
-swords_speed = 360/room_speed;
-swords_x = 0;
-swords_y = 0;
 AnimateMoveSprites(spr_samurai_move,spr_samurai_moved,spr_samurai_moveu);
 AnimateAttackSprites(spr_samurai_slash,spr_samurai_slash2);
 animate_idle = spr_samurai_idle;
@@ -83,9 +79,9 @@ switch(state){
         //animation
         sprite_index = animate_action1;
         image_index = round(action_dir/45);
-        var dash_length = 10;
-        var spd = 7+action_combo; 
-        spd = clamp(spd,8,12);
+        var dash_length = 8;
+        var spd = 6+action_combo; 
+        spd = clamp(spd,7,11);
         if (action1_timer &lt;= dash_length){//hyper light drifter 15/30 long.  first 5-8 is when he moves.
             can_combo = false;
             hspd = Tween(EASESMOOTHER,0,lengthdir_x(spd,action_dir),action1_timer,dash_length);
@@ -207,7 +203,7 @@ draw_sprite_ext(spr_player_shadow,0,x,y-3,scale_factor,scale_factor,0,c_white,.4
 if (state == stateACTION1){ 
     if(action1_timer == 1){ 
         if (action_combo &gt;= 2){
-            create_motion_trail(2,200,round(action_dir/15)*15,scale_factor,12,spr_samurai_dash_effect,0,true);
+            create_motion_trail(2,200,round(action_dir/15)*15,scale_factor,12,spr_samurai_dash_effect,0);
         } else {
             create_motion_trail(2,150,0,scale_factor,15,sprite_index,image_index);
         }

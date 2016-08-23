@@ -26,9 +26,11 @@
           <argument>
             <kind>1</kind>
             <string>///init surface variable
-surf = -1;
+dead_sf = -1;
+time_sf = -1;
 clear_from_ff = false;
 ff_alpha = 0;
+
 </string>
           </argument>
         </arguments>
@@ -52,8 +54,12 @@ ff_alpha = 0;
           <argument>
             <kind>1</kind>
             <string>///Destroy surfaces
-if (surface_exists(surf)) {
-    surface_free(surf);
+if (surface_exists(dead_sf)) {
+    surface_free(dead_sf);
+}
+
+if (surface_exists(time_sf)) {
+    surface_free(time_sf);
 }
 </string>
           </argument>
@@ -78,8 +84,12 @@ if (surface_exists(surf)) {
           <argument>
             <kind>1</kind>
             <string>///Destroy surfaces
-if (surface_exists(surf)) {
-    surface_free(surf);
+if (surface_exists(dead_sf)) {
+    surface_free(dead_sf);
+}
+
+if (surface_exists(time_sf)) {
+    surface_free(time_sf);
 }
 </string>
           </argument>
@@ -104,13 +114,45 @@ if (surface_exists(surf)) {
           <argument>
             <kind>1</kind>
             <string>///create surface
-if (!surface_exists(surf)) {
-    surf = surface_create(room_width, room_height);
-    surface_set_target(surf);
+if (!surface_exists(dead_sf)) {
+    dead_sf = surface_create(room_width, room_height);
+    surface_set_target(dead_sf);
     draw_clear_alpha(c_black,0);
     surface_reset_target();
 } else {
-    draw_surface(surf,0,0);
+    depth = 0;
+    draw_surface(dead_sf,0,0);
+}
+
+if (instance_exists(obj_player) and time_stop){
+    depth = -2000;
+    if (!surface_exists(time_sf)){
+        time_sf = surface_create(32, 32);
+        sf_timer = 0;
+    }
+    
+    if (sf_timer mod 4 == 0 and surface_get_width(time_sf) &lt; 512){
+        if (sf_timer mod 12 == 0){
+            surface_resize(time_sf, surface_get_width(time_sf)-16, surface_get_height(time_sf)-4);
+        } else {
+            surface_resize(time_sf, surface_get_width(time_sf)+32, surface_get_height(time_sf)+16);
+        }
+    }
+    
+    sf_timer++;   
+    
+    surf_w = surface_get_width(time_sf);
+    surf_h = surface_get_height(time_sf);
+    surf_x = obj_player.x-surf_w/2;
+    surf_y = obj_player.y-surf_h/2;
+    
+    // Draw 'shader'
+    surface_set_target(time_sf);
+    draw_clear_alpha(c_blue, .35);// Clear surface
+    surface_reset_target();
+    
+    // Draw surface to screen
+    draw_surface(time_sf, obj_player.x-surf_w/2, obj_player.y-surf_h/2);
 }
 
 /*
@@ -123,7 +165,7 @@ if (instance_exists(obj_player)){
         }
         depth = -5000;
         //draw to surface
-        surface_set_target(surf);
+        surface_set_target(dead_sf);
         draw_set_colour(c_black);
         draw_set_alpha(ff_alpha);
         draw_rectangle(0,0,room_width,room_height,false);
@@ -137,7 +179,7 @@ if (instance_exists(obj_player)){
     }else{
         if (clear_from_ff == true){
             
-            surface_set_target(surf);
+            surface_set_target(dead_sf);
             draw_clear_alpha(c_black,0);
             clear_from_ff = false;
             ff_alpha = 0;

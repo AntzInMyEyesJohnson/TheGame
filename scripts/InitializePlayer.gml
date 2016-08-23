@@ -66,6 +66,14 @@ action_combo = 0;
 can_combo = false;
 locked_timer = -1;
 locked_length = 40;
+charges_max = 2;
+charges_left = charges_max;
+spec_alarm_length = 6;
+spec_alarm = -1;
+spec_spd = 0;
+spec_dir = 0;
+spec_x = 0;
+spec_y = 0;
 
 
 //freeflow stuff

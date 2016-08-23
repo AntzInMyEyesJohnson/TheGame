@@ -1,5 +1,6 @@
 ///IncrementTimers();
 //gunslinger
+/*
 if (lockon_juice_left >= lockon_juice_max) {
     lockon_juice_left = lockon_juice_max;
 } else {
@@ -9,7 +10,7 @@ if (deadeye_juice_left >= deadeye_juice_max) {
     deadeye_juice_left = deadeye_juice_max;
 } else {
     deadeye_juice_left += 1/room_speed;
-}
+}*/
 //samurai
 /*
 last_charge_timer += 1/room_speed;
@@ -20,7 +21,7 @@ if (swords_juice_left >= swords_juice_max) {
         swords_juice_left += 1/room_speed;
     }
 }
-*/
+
 //wizard
 last_gravity_timer += 1/room_speed;
 //bandit
@@ -30,7 +31,7 @@ if (shadow_juice_left >= shadow_juice_max) {
     shadow_juice_left = shadow_juice_max;
 } else {
     shadow_juice_left += 1/room_speed;
-}
+}*/
 //viking
 /*
 if (shield_juice_left >= shield_juice_max) {
@@ -48,22 +49,33 @@ last_deflect_timer += 1/room_speed;
 */
 //all
 //action1_alarm--;
-if (juice1_left >= juice1_max) {
-    juice1_left = juice1_max;
-} else {
-    if (state != stateSPECIAL){
+if (state != stateSPECIAL){
+    if (juice1_left >= juice1_max) {
+        juice1_left = juice1_max;
+    } else {
         juice1_left += 1/room_speed;
     }
+} else {
+    if juice1_left > 0 {
+        juice1_left -= 1/room_speed;
+    } else {
+        juice1_left = 0;
+    }
 }
+/*
 if (juice2_max > 0){
     if (juice2_left >= juice2_max) {
         juice2_left = juice2_max;
     } else {
         if (state != stateSPECIAL){
             juice2_left += 1/room_speed;
+        } else {
+            if juice2_left > 0 {
+                juice2_left -= 1/room_speed;
+            }
         }
     }
-}
+}*/
 //hit state
 hit_timer += 1/room_speed;
 

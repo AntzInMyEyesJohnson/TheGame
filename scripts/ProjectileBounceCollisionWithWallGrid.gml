@@ -35,7 +35,7 @@ if (grid_place_meeting(x+hspd,y,0)){
 } else {
     if (time_stop and !time_exception)
         {
-        x += hspd/11;
+        x += hspd/15;
         }        
     else if (time_slow and !time_exception)
         {
@@ -65,7 +65,7 @@ if (grid_place_meeting(x,y+vspd,0)){
 } else {
     if (time_stop and !time_exception)
         {
-        y += vspd/11;
+        y += vspd/15;
         }        
     else if (time_slow and !time_exception)
         {

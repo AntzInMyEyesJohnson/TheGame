@@ -15,11 +15,7 @@ if(incoming_player_projectile){
         hitby_dmg_type = incoming_player_projectile.object_index;
 
         //screenfreeze effect
-        if (hitby_dmg_type == obj_projectile_melee){
-            global.screenfreeze = 6;
-        } else {
-            global.screenfreeze = 3;
-        }
+        SetScreenFreezeType(incoming_player_projectile.object_index);
 
         //set particles
         destdir = point_direction(player.x,player.y,x,y);
@@ -39,3 +35,4 @@ if(incoming_player_projectile){
 }
 
 return _continue;
+

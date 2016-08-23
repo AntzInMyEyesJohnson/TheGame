@@ -120,7 +120,7 @@ if (rotating){
 
 
 if ( (x == xprevious and y == yprevious) ) {
-    instance_create(x,y,obj_placehold);
+    instance_create(x,y,obj_planted_sword);
     instance_destroy();
 }   
 </string>

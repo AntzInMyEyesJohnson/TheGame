@@ -1,10 +1,5 @@
 ///InitializeTimers();
 //gunslinger
-lockon_juice_left = 120/room_speed;
-lockon_juice_max = 2;
-deadeye_juice_left = 120/room_speed;
-deadeye_juice_max = 2;
-//samurai
 if (object_index == obj_gunslinger){
     juice1_max = 3;
     juice1_left = 180/room_speed;
@@ -14,8 +9,8 @@ if (object_index == obj_gunslinger){
 
 //samurai
 if (object_index == obj_samurai){
-    juice1_max = 3;
-    juice1_left = 180/room_speed;
+    juice1_max = 10;
+    juice1_left = 600/room_speed;
     juice2_max = -1;
     juice2_left = -1;
 }

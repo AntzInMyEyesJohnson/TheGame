@@ -10,7 +10,7 @@ size = argument6;
 radius = argument7;
 amount = argument8;
 
-    texid = surface_get_texture(surf);
+    texid = surface_get_texture(dead_sf);
     draw_set_color(c_blue);
     
     w = width / size;

@@ -222,7 +222,7 @@
     <sprite>sprites\spr_viking_shield</sprite>
     <sprite>sprites\spr_wall</sprite>
     <sprite>sprites\spr_gravity_well</sprite>
-    <sprite>sprites\spr_effect_swords</sprite>
+    <sprite>sprites\spr_sword_selected</sprite>
     <sprite>sprites\spr_effect_stunned</sprite>
     <sprite>sprites\spr_ff_hint</sprite>
     <sprite>sprites\spr_wall_shadow</sprite>
@@ -364,6 +364,7 @@
       <script>scripts\DisplayReloadOnGUI.gml</script>
       <script>scripts\DisplayParryOnGUI.gml</script>
       <script>scripts\DisplayManaOnGUI.gml</script>
+      <script>scripts\DisplayChargesOnGUI.gml</script>
     </scripts>
     <scripts name="collisions">
       <script>scripts\grid_place_meeting.gml</script>
@@ -411,10 +412,10 @@
       <script>scripts\GetAbilityInput.gml</script>
       <script>scripts\GetSpecialInput.gml</script>
       <script>scripts\InitializePlayer.gml</script>
-      <script>scripts\InitializeEnemies.gml</script>
       <script>scripts\PlayerLockedState.gml</script>
       <script>scripts\PlayerDeathState.gml</script>
       <script>scripts\ChampionSpecial.gml</script>
+      <script>scripts\AttackInit.gml</script>
       <script>scripts\ActionInit.gml</script>
       <script>scripts\PlayerHitState.gml</script>
     </scripts>
@@ -427,6 +428,7 @@
     <scripts name="enemies">
       <script>scripts\ResetStateTimers.gml</script>
       <script>scripts\GetEnemyTimers.gml</script>
+      <script>scripts\InitializeEnemies.gml</script>
       <script>scripts\IAmFacingTowards.gml</script>
       <script>scripts\EnemyHitState.gml</script>
     </scripts>
@@ -513,7 +515,6 @@
     <script>scripts\particle_script.gml</script>
     <script>scripts\AnimateFreeflowSprites.gml</script>
     <script>scripts\InitStartingWeapon.gml</script>
-    <script>scripts\AttackInit.gml</script>
     <script>scripts\XscaleFlip.gml</script>
     <script>scripts\script133.gml</script>
     <script>scripts\old_ass_level_gen_shit.gml</script>
@@ -521,7 +522,10 @@
     <script>scripts\AnimateAttackSprites.gml</script>
     <script>scripts\AnimateActionMoveSprites.gml</script>
     <script>scripts\InstanceInView.gml</script>
+    <script>scripts\PointInRoom.gml</script>
     <script>scripts\collision_line_list.gml</script>
+    <script>scripts\SetTimeState.gml</script>
+    <script>scripts\SetScreenFreezeType.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_game_over</font>
@@ -589,7 +593,7 @@
         <object>objects\obj_projectile_deflect</object>
         <object>objects\obj_projectile_melee</object>
         <object>objects\obj_projectile_arc</object>
-        <object>objects\obj_placehold</object>
+        <object>objects\obj_planted_sword</object>
       </objects>
       <objects name="enemy projectiles">
         <object>objects\obj_enemy_projectile_special</object>

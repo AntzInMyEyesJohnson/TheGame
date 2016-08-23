@@ -19,8 +19,8 @@ if (grid_place_meeting(x,y,0)){
     hooked_wall = true;
 } else {
     if (time_stop and !time_exception){
-        x += hspd*(1/11);
-        y += vspd*(1/11);
+        x += hspd/15;
+        y += vspd/15;
     }else if (time_slow and !time_exception){
         x += hspd/5;
         y += vspd/5;

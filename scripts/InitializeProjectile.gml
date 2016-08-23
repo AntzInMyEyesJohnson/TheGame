@@ -30,3 +30,4 @@ projectile_amount = 1;
 projectile_sound = -1;
 hitting_enemy = noone;
 se_duration = 0;
+specialPositioning = -1;

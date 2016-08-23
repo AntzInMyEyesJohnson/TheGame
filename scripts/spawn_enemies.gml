@@ -16,14 +16,14 @@ for(var yy = 0;yy < height;yy++;){for(var xx = 0; xx < width;xx++;){
                 instance_create(ex, ey, choose(et2,et1,et0));
                 enemy_count++;
             }
-            if (enemy_count <= (3+global.difficulty)){
-                while(enemy_count <= 3)
-                {
-                    instance_create(ex,ey,choose(et2,et1,et0))
-                    enemy_count++;
-                }
-            } 
         }
     }
 }
 }
+
+if (enemy_count <= (3+global.difficulty)){
+    while(enemy_count <= 3){
+        instance_create(ex,ey,choose(et2,et1,et0))
+        enemy_count++;
+    }
+} 

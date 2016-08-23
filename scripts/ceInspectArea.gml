@@ -9,7 +9,7 @@ if (instance_exists(obj_player)){
     yy = (obj_player.yprevious div CELL_HEIGHT)*CELL_HEIGHT+CELL_HEIGHT/2;
 }
 
-if (!grid_place_meeting(xx,yy,0)){
+if (!grid_place_meeting(xx,yy,0) and PointInRoom(xx,yy)){
     comscript = cePatrolToXY;
 } else {
     comscript = cePatrolArea;

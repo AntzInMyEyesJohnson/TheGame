@@ -221,6 +221,7 @@ surface_reset_target();
 // Draw surface to screen
 draw_surface(sf, x-surf_w/2, y-surf_h/2);
 
+/*
 //draw lines if ok
 if (do_lines){
     vfactor = irandom_range(-20,20);

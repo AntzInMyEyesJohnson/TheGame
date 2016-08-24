@@ -593,7 +593,6 @@
         <object>objects\obj_projectile_deflect</object>
         <object>objects\obj_projectile_melee</object>
         <object>objects\obj_projectile_arc</object>
-        <object>objects\obj_planted_sword</object>
       </objects>
       <objects name="enemy projectiles">
         <object>objects\obj_enemy_projectile_special</object>
@@ -613,6 +612,7 @@
     </objects>
     <object>objects\obj_wall</object>
     <object>objects\obj_ps</object>
+    <object>objects\obj_planted_sword</object>
     <object>objects\obj_upgrade_slots</object>
     <object>objects\obj_camera</object>
     <object>objects\obj_debris</object>

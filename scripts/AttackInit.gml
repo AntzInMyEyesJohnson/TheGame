@@ -2,7 +2,8 @@
 projectile_type = argument[0];
 attack_length = round(argument[1]*room_speed);
 attack_alarm = attack_length;
-ani_atkwindow_alarm = room_speed;//really means that player has room_speed-attack_length amount of time to continue comboing
+ani_atkcombo = SetAttackAnimation(ani_atkwindow_alarm);//must be before setting ani_atkwindow_alarm
+ani_atkwindow_alarm = room_speed;//really means that for 1 second after attack you can continue combo
 global.screenkick += argument[2];
 sound = argument[3];
 
